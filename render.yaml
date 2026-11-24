@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: cs2-lan-statistics
+    runtime: python
+    plan: starter
+    region: singapore
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn server:app --bind 0.0.0.0:$PORT --workers 1 --timeout 600
+    healthCheckPath: /api/health
+    disk:
+      name: cs2-statistics-data
+      mountPath: /var/data
+      sizeGB: 1
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.8
+      - key: CS2_DATA_DIR
+        value: /var/data
+      - key: CS2_USER
+        value: lanadmin
+      - key: CS2_PASSWORD
+        generateValue: true

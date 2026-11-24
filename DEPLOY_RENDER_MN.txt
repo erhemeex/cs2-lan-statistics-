@@ -1,0 +1,26 @@
+CS2 LAN STATISTICS — WEBSITE БОЛГОЖ БАЙРШУУЛАХ
+
+ЧУХАЛ
+- Энэ багц нь website-ийг Render дээр байрлуулахад бэлэн тохиргоотой. Гэхдээ би таны Render/GitHub аккаунтад нэвтэрч, таны өмнөөс нийтэд URL үүсгэж чадахгүй. Та өөрийн аккаунтаар доорх алхмуудыг хийх хэрэгтэй.
+- Render дээр статистикийн түүхийг хадгалахын тулд persistent disk ашиглаж байна. Render-ийн persistent disk нь төлбөртэй web service шаарддаг. Үнэгүй ephemeral service дээр хадгалсан файл restart/deploy үед устаж болзошгүй.
+- Public URL дээр login хамгаалалт идэвхтэй. Render CS2_PASSWORD-ийг автоматаар үүсгэнэ.
+
+1. GitHub-д нэвтэрч New repository үүсгэ. Жишээ нэр: cs2-lan-statistics. Private repository байлгахыг зөвлөж байна.
+2. ZIP-ийг задлаад доторх cs2_captain_draft_pro_plus хавтасны АГУУЛГЫГ repository-ийн үндсэн түвшинд upload хий. server.py, index.html, requirements.txt, render.yaml бүгд үндсэн түвшинд байх ёстой.
+3. GitHub дээр commit хий.
+4. https://dashboard.render.com/blueprints руу орж New Blueprint Instance сонго.
+5. GitHub repository-гоо холбоод render.yaml-ийг уншуулж deploy эхлүүл.
+6. Render plan болон persistent disk-ийн төлбөрийг шалгаад зөвшөөр. render.yaml нь paid Starter web service + 1 GB persistent disk тохируулсан.
+7. Deploy дууссаны дараа Render dashboard -> Environment хэсгээс CS2_PASSWORD-ийн автоматаар үүсгэсэн утгыг хар. Username нь lanadmin.
+8. Render-ээс өгсөн https://...onrender.com URL-ийг нээ. Browser login асуухад username lanadmin, password нь CS2_PASSWORD утга байна.
+9. Найзууддаа URL болон нэвтрэх мэдээллийг зөвхөн хувийн хүрээнд өг.
+
+ӨГӨГДӨЛ
+- /var/data дотор history.json хадгалагдана. Persistent disk-ийн ачаар restart/deploy-ийн дараа хадгалагдана.
+- Upload хийсэн .dem файлыг боловсруулсны дараа устгаж, зөвхөн статистикийн үр дүнг үлдээнэ.
+- Энэ хувилбар demo upload-д суурилсан. CS2-ийн live kill feed/round feed хараахан холбогдоогүй.
+- Тоглолтын demo upload-ийг website-ийн Demo Analyzer хэсгээс хийнэ.
+- Demo upload хэмжээ/боловсруулах хугацаа нь hosting үйлчилгээний request limit, RAM болон CPU-ээс хамаарна.
+
+ТУСЛАМЖ
+- Deploy алдаа гарвал Render Dashboard -> Logs хэсгийн хамгийн сүүлийн алдааг хуулж ав.

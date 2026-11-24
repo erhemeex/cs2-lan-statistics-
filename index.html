@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#101318">
+<title>CS2 Captain Draft Pro</title>
+<style>
+:root{--bg:#0d1015;--panel:#151a22;--panel2:#1c232e;--line:#2a3442;--muted:#8c98a8;--text:#f3f6fa;--orange:#ff6a00;--orange2:#ff9b42;--blue:#39b8ff;--green:#39d98a;--red:#ff5364}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 12% 0%,#2b1b12 0,transparent 32%),radial-gradient(ellipse at 90% 8%,#102536 0,transparent 30%),var(--bg);color:var(--text);font:14px/1.45 Inter,system-ui,Arial,sans-serif;min-height:100vh}
+button,input,select{font:inherit}button{cursor:pointer;color:inherit} .wrap{max-width:1180px;margin:auto;padding:20px}
+header{position:sticky;top:0;z-index:10;background:#0d1015eF;backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.top{max-width:1180px;margin:auto;padding:13px 20px;display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
+.brand{display:flex;gap:12px;align-items:center}.logo{width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,#ff7a18,#a33d00);display:grid;place-items:center;font-weight:1000;font-size:19px;box-shadow:0 5px 25px #ff6a0033}
+h1{font-size:17px;margin:0;font-weight:900;letter-spacing:.04em}.sub{font-size:11px;color:var(--muted);margin-top:3px}
+.actions{display:flex;gap:8px;flex-wrap:wrap}.btn{border:1px solid var(--line);background:var(--panel2);padding:9px 12px;border-radius:9px;font-weight:700;font-size:12px;transition:.18s}.btn:hover{filter:brightness(1.2);transform:translateY(-1px)}.primary{background:linear-gradient(100deg,#ff6a00,#ff8a24);color:#160d06;border:0}.blue{background:#123149;border-color:#205678;color:#9cddff}.danger{color:#ff8791;border-color:#67303a;background:#29171c}.ghost{background:transparent}.small{padding:6px 9px;font-size:11px}
+h2{font-size:16px;margin:0 0 4px}.eyebrow{color:var(--orange2);font:700 10px ui-monospace,monospace;letter-spacing:.12em;text-transform:uppercase}.muted{color:var(--muted)}.panel{background:linear-gradient(145deg,#171d27,#121720);border:1px solid var(--line);border-radius:15px;padding:17px;margin:15px 0;box-shadow:0 12px 35px #0002}
+.panelhead{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:9px}.field label{display:block;color:var(--muted);font-size:10px;font-weight:800;margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em}
+input,select{width:100%;min-width:0;background:#0e131b;border:1px solid var(--line);border-radius:8px;color:var(--text);padding:10px;outline:none}input:focus,select:focus{border-color:var(--orange)}input[type=number]{font-family:ui-monospace,monospace}
+.setup-bottom{display:grid;grid-template-columns:1fr 1fr 1.3fr;gap:10px;margin-top:15px}.captainbox{background:#0d1219;border:1px solid var(--line);padding:12px;border-radius:11px}.captainbox.amber{border-color:#a64b17}.captainbox.cyan{border-color:#17628b}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:16px 0}.step{padding:10px;border-radius:10px;background:var(--panel);border:1px solid var(--line);font-size:11px;color:var(--muted)}.step b{color:var(--text);margin-right:7px}
+.dicearea{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;align-items:center}.diecard{text-align:center;background:#0c1118;border:1px solid var(--line);border-radius:13px;padding:16px}.diecard h3{font-size:12px;margin:0 0 10px}.die{width:88px;height:88px;margin:0 auto 10px;background:linear-gradient(145deg,#fff,#c9d0d9);color:#17202b;border-radius:16px;display:grid;place-items:center;font-size:43px;font-weight:900;box-shadow:inset -5px -7px 14px #0002,0 10px 24px #0005;transition:transform .5s}.die.rolling{animation:roll .55s linear infinite}@keyframes roll{to{transform:rotate(360deg) scale(.92)}}
+.dicecenter{text-align:center}.result{min-height:42px;color:#c4cfdb;font-size:12px;margin:10px 0}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.stat{background:#0e131b;border:1px solid var(--line);padding:11px;border-radius:10px}.stat small{display:block;color:var(--muted);font-size:10px}.stat strong{font:800 22px ui-monospace,monospace}
+.teams{display:grid;grid-template-columns:1fr 1fr;gap:14px}.team{border-radius:14px;overflow:hidden;border:1px solid var(--line);background:#10151d}.teamhead{padding:13px 15px;display:flex;justify-content:space-between;align-items:center;background:#1d2024;border-bottom:1px solid var(--line)}.team.amber{border-color:#814018}.team.amber .teamhead{background:linear-gradient(100deg,#4a260f,#211a16)}.team.cyan{border-color:#185477}.team.cyan .teamhead{background:linear-gradient(100deg,#10334a,#17202a)}.teamhead strong{font-size:13px}.score{font:800 20px ui-monospace,monospace}.roster{padding:9px;min-height:90px}.player{display:grid;grid-template-columns:minmax(0,1fr) 58px auto;align-items:center;gap:8px;padding:9px;border-bottom:1px solid #252d39}.player:last-child{border:0}.pname{font-weight:750;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.role{font-size:9px;color:var(--muted);margin-top:2px}.rating{font:800 12px ui-monospace,monospace;text-align:center;background:#222b37;padding:5px;border-radius:6px}.pickbtn{padding:7px 9px;border-radius:7px;border:1px solid var(--line);background:#202a36;font-size:10px;font-weight:800}.pickbtn:disabled{opacity:.35;cursor:not-allowed}
+.pool{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.poolcard{background:#10151d;border:1px solid var(--line);border-radius:10px;padding:10px}.poolcard strong{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.poolcard small{color:var(--muted)}.poolcard button{margin-top:8px;width:100%}
+.history{display:flex;flex-direction:column;gap:6px;max-height:240px;overflow:auto}.historyitem{display:flex;justify-content:space-between;gap:10px;padding:8px 10px;background:#0f141c;border:1px solid #252e3b;border-radius:8px;font-size:11px}.historyitem b{color:var(--orange2)}
+.notice{font-size:11px;color:var(--muted);margin-top:8px}.toast{position:fixed;bottom:18px;right:18px;background:#202a35;border:1px solid #536174;padding:11px 15px;border-radius:10px;box-shadow:0 12px 30px #0008;opacity:0;transform:translateY(10px);pointer-events:none;transition:.2s;z-index:30}.toast.show{opacity:1;transform:none}
+.empty{padding:18px;text-align:center;color:var(--muted);font-size:12px}.footer{text-align:center;color:#687485;font-size:10px;padding:20px}
+@media(max-width:760px){.wrap{padding:12px}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.setup-bottom{grid-template-columns:1fr}.dicearea{grid-template-columns:1fr 1fr}.dicecenter{grid-column:1/-1;grid-row:1}.teams{grid-template-columns:1fr}.pool{grid-template-columns:repeat(2,1fr)}.stats{grid-template-columns:repeat(3,1fr)}.panel{padding:13px}.top{padding:10px 12px}.steps{gap:5px}.step{padding:8px;font-size:10px}}
+@media(max-width:390px){.grid{grid-template-columns:1fr 1fr}.pool{grid-template-columns:1fr 1fr}.btn{padding:8px 9px}.die{width:70px;height:70px;font-size:36px}}
+
+/* DEMO ANALYTICS ADD-ON */
+.uploadzone{border:1px dashed #586779;background:#0d131b;border-radius:13px;padding:24px;text-align:center;display:grid;gap:10px;justify-items:center}.uploadzone.drag{border-color:var(--orange);background:#24170f}.uploadzone input{max-width:360px}.demo-meta{display:flex;gap:8px;flex-wrap:wrap}.pill{background:#222b37;border:1px solid #354252;border-radius:999px;padding:5px 9px;font-size:10px;color:#cbd5e1}.metricgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin:14px 0}.metric{background:#0e131b;border:1px solid var(--line);border-radius:10px;padding:12px}.metric small{display:block;color:var(--muted);font-size:10px}.metric strong{font:800 22px ui-monospace,monospace}.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:10px}table.analytics{border-collapse:collapse;width:100%;min-width:650px;font-size:12px}table.analytics th,table.analytics td{padding:10px;text-align:right;border-bottom:1px solid #27313e;white-space:nowrap}table.analytics th:first-child,table.analytics td:first-child{text-align:left}table.analytics th{background:#1a222d;color:#aeb9c7;font-size:10px;text-transform:uppercase;letter-spacing:.06em}table.analytics tr:last-child td{border-bottom:0}.statusline{font-size:12px;color:var(--muted);min-height:20px}.statusline.error{color:#ff8791}.statusline.good{color:#39d98a}.historycards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.matchcard{padding:10px;background:#0e131b;border:1px solid var(--line);border-radius:9px;font-size:11px}.matchcard b{color:var(--orange2)}
+@media(max-width:760px){.metricgrid{grid-template-columns:repeat(2,1fr)}.historycards{grid-template-columns:1fr}}
+
+</style>
+</head>
+<body>
+<header><div class="top">
+ <div class="brand"><div class="logo">CS</div><div><h1>CAPTAIN <span style="color:var(--orange)">DRAFT</span> PRO</h1><div class="sub">5v5 • FACEIT INSPIRED • TEAM BUILDER</div></div></div>
+ <div class="actions"><button class="btn" id="soundBtn">🔊 Sound ON</button><button class="btn danger" id="resetBtn">↻ Reset</button></div>
+</div></header>
+<main class="wrap">
+ <div class="steps"><div class="step"><b>01</b> PLAYERS & CAPTAINS</div><div class="step"><b>02</b> COIN / DICE PICK</div><div class="step"><b>03</b> LIVE DRAFT</div></div>
+
+ <section class="panel">
+  <div class="panelhead"><div><div class="eyebrow">STEP 01 • LOBBY SETUP</div><h2>Тоглогчдын бүртгэл</h2><div class="sub">10 тоглогчийн нэр болон чадварын рейтинг оруулна (1–10).</div></div><div class="actions"><button class="btn small" id="randomBtn">🎲 Random names</button><button class="btn small" id="clearBtn">Clear</button></div></div>
+  <div class="grid" id="players"></div>
+  <div class="setup-bottom">
+   <div class="captainbox"><div class="eyebrow">TEAM 1 • ORANGE</div><label class="sub" for="cap1">Ахлагч</label><select id="cap1"></select></div>
+   <div class="captainbox"><div class="eyebrow" style="color:var(--blue)">TEAM 2 • BLUE</div><label class="sub" for="cap2">Ахлагч</label><select id="cap2"></select></div>
+   <div class="captainbox"><div class="eyebrow">DRAFT ORDER</div><label class="sub" for="mode">Сонголтын дараалал</label><select id="mode"><option value="snake">Snake (1-2-2-1-1-2-2-1)</option><option value="alternating">Alternating (1-2-1-2-1-2-1-2)</option></select></div>
+  </div>
+  <div class="notice">Ахлагчид автоматаар багтаа орно. Үлдсэн 8 тоглогчоос тус бүр 4-ийг сонгоно.</div>
+ </section>
+
+ <section class="panel">
+  <div class="panelhead"><div><div class="eyebrow">STEP 02 • FIRST PICK</div><h2>Шоо хаяж эхлэх эрхээ шийдэх</h2></div><span class="muted" id="diceStatus">Хүлээгдэж байна</span></div>
+  <div class="dicearea">
+   <div class="diecard"><h3 style="color:var(--orange2)" id="dieName1">TEAM 1 CAPTAIN</h3><div class="die" id="die1">⚄</div><div class="sub">Буусан тоо: <b id="val1">—</b></div></div>
+   <div class="dicecenter"><button class="btn primary" id="rollBtn">🎲 ШОО ХАЯХ</button><div class="result" id="outcome">Их тоо буулгасан ахлагч эхэлж сонгоно.</div><div class="actions" style="justify-content:center"><button class="btn small" id="force1">Team 1 эхэлнэ</button><button class="btn small blue" id="force2">Team 2 эхэлнэ</button></div></div>
+   <div class="diecard"><h3 style="color:var(--blue)" id="dieName2">TEAM 2 CAPTAIN</h3><div class="die" id="die2">⚄</div><div class="sub">Буусан тоо: <b id="val2">—</b></div></div>
+  </div>
+ </section>
+
+ <section class="panel">
+  <div class="panelhead"><div><div class="eyebrow">STEP 03 • LIVE DRAFT</div><h2>Багийн бүрэлдэхүүн</h2><div class="sub" id="turnText">Эхлэх ахлагчийг сонгоно уу.</div></div><div class="actions"><button class="btn small" id="undoBtn" disabled>↶ Undo</button><button class="btn small" id="copyBtn">▣ Copy result</button></div></div>
+  <div class="stats">
+   <div class="stat"><small>TEAM 1 TOTAL</small><strong id="total1" style="color:var(--orange2)">0.0</strong></div>
+   <div class="stat"><small>TEAM 2 TOTAL</small><strong id="total2" style="color:var(--blue)">0.0</strong></div>
+   <div class="stat"><small>RATING GAP</small><strong id="gap">0.0</strong></div>
+  </div>
+  <div class="teams" style="margin-top:13px">
+   <div class="team amber"><div class="teamhead"><strong>🟠 TEAM 1 <span id="team1Count" class="muted">0/5</span></strong><span class="score" id="team1Score">0.0</span></div><div class="roster" id="team1Roster"><div class="empty">Ахлагч болон тоглогчид энд харагдана.</div></div></div>
+   <div class="team cyan"><div class="teamhead"><strong>🔵 TEAM 2 <span id="team2Count" class="muted">0/5</span></strong><span class="score" id="team2Score">0.0</span></div><div class="roster" id="team2Roster"><div class="empty">Ахлагч болон тоглогчид энд харагдана.</div></div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin:17px 0 9px"><div><div class="eyebrow">AVAILABLE PLAYERS</div><h2 style="margin:2px 0">Сонгох боломжтой тоглогчид</h2></div><span class="muted" id="availableCount">8 үлдсэн</span></div>
+  <div class="pool" id="pool"></div>
+ </section>
+
+ <section class="panel">
+  <div class="panelhead"><div><div class="eyebrow">MATCH MANAGEMENT</div><h2>Trade / Тоглогч солих</h2><div class="sub">Draft дууссаны дараа эсвэл явц дунд багуудын тоглогчийг солино.</div></div></div>
+  <div class="setup-bottom" style="margin:0">
+   <div class="captainbox"><label class="sub" for="tradeA">Team 1 тоглогч</label><select id="tradeA"></select></div>
+   <div class="captainbox"><label class="sub" for="tradeB">Team 2 тоглогч</label><select id="tradeB"></select></div>
+   <div class="captainbox" style="display:flex;align-items:end"><button class="btn blue" id="tradeBtn" style="width:100%">⇄ Trade players</button></div>
+  </div>
+  <div class="notice">Ахлагчийг солих боломжгүй. Trade нь багийн рейтингийг шууд шинэчилнэ.</div>
+ </section>
+
+ <section class="panel">
+  <div class="panelhead"><div><div class="eyebrow">DRAFT LOG</div><h2>Сонголтын түүх</h2></div><span class="muted" id="historyCount">0 үйлдэл</span></div>
+  <div class="history" id="history"><div class="empty">Одоогоор түүх алга.</div></div>
+ </section>
+
+ <section class="panel" id="demoAnalytics">
+  <div class="panelhead"><div><div class="eyebrow">STEP 04 • MATCH ANALYTICS</div><h2>CS2 Demo анализ</h2><div class="sub">.dem файлаа оруулаад тоглогчдын статистикийг автоматаар гаргана.</div></div><span class="pill">LOCAL PARSER</span></div>
+  <div class="uploadzone" id="demoDrop">
+   <div style="font-size:30px">📁</div><strong>Demo файлаа энд чирж оруулах эсвэл сонгох</strong>
+   <div class="muted" style="font-size:11px">Зөвхөн CS2 .dem файл • Demo-д орсон бүх тоглогчийг автоматаар илрүүлнэ</div>
+   <input id="demoFile" type="file" accept=".dem,application/octet-stream">
+   <button class="btn primary" id="analyzeDemoBtn">⚡ DEMO ANALYZE</button>
+  </div>
+  <div class="statusline" id="demoStatus" style="margin-top:10px">Сервертэй холбогдоход бэлэн. Доорх START_SERVER.bat-ийг ажиллуулсан байх шаардлагатай.</div>
+  <div id="demoResults" hidden>
+   <div class="demo-meta" id="demoMeta"></div>
+   <div class="metricgrid" id="demoMetrics"></div>
+   <div class="panelhead" style="margin-top:18px"><div><div class="eyebrow">PLAYER PERFORMANCE</div><h2>Тоглогчдын статистик</h2></div><button class="btn small" id="exportCsvBtn">⬇ Export CSV</button></div>
+   <div class="tablewrap"><table class="analytics"><thead><tr><th>Player</th><th>K</th><th>D</th><th>A</th><th>K/D</th><th>HS%</th><th>ADR*</th></tr></thead><tbody id="demoPlayerRows"></tbody></table></div>
+   <div class="notice">* ADR нь player_hurt event-ээс тооцсон damage / round. Demo-ийн event өгөгдөлд тулгуурлана; KAST, utility impact зэрэг нэмэлт үзүүлэлтийг дараагийн хувилбарт нэмж болно.</div>
+  </div>
+  <div class="panelhead" style="margin-top:22px"><div><div class="eyebrow">ALL-TIME • CAREER STATS</div><h2>🏆 All-Time Leaderboard</h2><div class="sub">Тоглогчийн тоонд хязгааргүй. Demo-д илэрсэн бүх тоглогчийг бүртгэж, нэр ижил бол нийлүүлнэ.</div></div><button class="btn small" id="refreshLeaderboardBtn">↻ Refresh</button></div>
+  <div class="metricgrid" id="leaderMetrics"></div>
+  <div class="tablewrap"><table class="analytics"><thead><tr><th>#</th><th>Player</th><th>Matches</th><th>K</th><th>D</th><th>A</th><th>K/D</th><th>HS%</th><th>ADR</th><th>Score*</th></tr></thead><tbody id="leaderRows"><tr><td colspan="10">Одоогоор статистик алга.</td></tr></tbody></table></div>
+  <div class="notice">* Score нь энэ сайтын тооцоолсон community оноо; Valve/CS2-ийн албан ёсны rating биш. Win rate нь demo-оос багийн тоглогчийн таних мэдээлэл найдвартай олдсон үед л нэмэгдэнэ.</div>
+  <div class="panelhead" style="margin-top:20px"><div><div class="eyebrow">SAVED MATCHES</div><h2>Хадгалсан тоглолтууд</h2></div><button class="btn small" id="refreshMatchesBtn">↻ Refresh</button></div>
+  <div class="historycards" id="savedMatches"><div class="empty">Одоогоор хадгалсан demo алга.</div></div>
+ </section>
+
+ <div class="footer">CS2 CAPTAIN DRAFT PRO • Өгөгдөл энэ төхөөрөмжийн browser-д хадгалагдана.</div>
+</main>
+<div class="toast" id="toast">Амжилттай</div>
+<script>
+(()=>{
+const $=id=>document.getElementById(id);
+const defaults=Array.from({length:10},(_,i)=>({id:i,name:`Player ${i+1}`,rating:5}));
+const state={players:defaults.map(p=>({...p})),caps:[0,1],teams:[[],[]],first:null,turn:0,mode:'snake',rolls:null,history:[],sound:true,started:false};
+const randomNames=['wopwop','AlterEgo','EntryFrag','ClutchKing','NoScope','Shadow','Rusher','AimBot','Ghost','Viper'];
+const orderSnake=[0,1,1,0,0,1,1,0],orderAlt=[0,1,0,1,0,1,0,1];
+let audioCtx=null;
+function beep(freq=440,dur=.08){if(!state.sound)return;try{audioCtx??=new(window.AudioContext||window.webkitAudioContext)();let o=audioCtx.createOscillator(),g=audioCtx.createGain();o.frequency.value=freq;o.type='sine';g.gain.setValueAtTime(.06,audioCtx.currentTime);g.gain.exponentialRampToValueAtTime(.001,audioCtx.currentTime+dur);o.connect(g);g.connect(audioCtx.destination);o.start();o.stop(audioCtx.currentTime+dur)}catch(e){}}
+function toast(msg){$('toast').textContent=msg;$('toast').classList.add('show');setTimeout(()=>$('toast').classList.remove('show'),1900)}
+function save(){try{localStorage.setItem('cs2captaindraftpro',JSON.stringify(state))}catch(e){}}
+function snapshot(){return JSON.stringify(state)}
+function pushHistory(label){state.history.unshift({label,time:new Date().toLocaleTimeString('mn-MN',{hour:'2-digit',minute:'2-digit'})});state.history=state.history.slice(0,40)}
+function teamOf(id){return state.teams[0].includes(id)?0:state.teams[1].includes(id)?1:-1}
+function teamScore(t){return state.teams[t].reduce((s,id)=>s+(Number(state.players[id].rating)||0),0)}
+function average(t){return state.teams[t].length?(teamScore(t)/state.teams[t].length).toFixed(1):'0.0'}
+function eligible(){return state.players.filter(p=>!state.teams[0].includes(p.id)&&!state.teams[1].includes(p.id))}
+function currentCaptain(){return state.first===null?null:(state.mode==='snake'?orderSnake:orderAlt)[state.turn]??null}
+function renderInputs(){
+ $('players').innerHTML=state.players.map(p=>`<div class="field"><label>PLAYER ${p.id+1}</label><input data-name="${p.id}" maxlength="20" value="${esc(p.name)}" aria-label="Player ${p.id+1} name"><div style="display:flex;gap:5px;margin-top:5px;align-items:center"><span class="muted" style="font-size:10px">Rating</span><input data-rating="${p.id}" type="number" min="1" max="10" step=".5" value="${p.rating}" aria-label="Player ${p.id+1} rating" style="padding:6px;text-align:center"></div></div>`).join('');
+ const options=state.players.map(p=>`<option value="${p.id}">${esc(p.name)}</option>`).join('');
+ ['cap1','cap2'].forEach((id,i)=>{$(id).innerHTML=options;$(id).value=state.caps[i]});
+ $('mode').value=state.mode;
+ $('dieName1').textContent=state.players[state.caps[0]].name+' • TEAM 1';
+ $('dieName2').textContent=state.players[state.caps[1]].name+' • TEAM 2';
+}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function render(){
+ const names=['team1Roster','team2Roster'];
+ state.teams.forEach((arr,t)=>{
+  $(names[t]).innerHTML=arr.length?arr.map(id=>{let p=state.players[id],captain=state.caps[t]===id;return `<div class="player"><div><div class="pname">${esc(p.name)} ${captain?'👑':''}</div><div class="role">${captain?'CAPTAIN':'PLAYER'}</div></div><div class="rating">${Number(p.rating).toFixed(1)}</div><span class="muted" style="font-size:10px">${captain?'LEAD':'RATING'}</span></div>`}).join(''):'<div class="empty">Одоогоор тоглогч алга.</div>';
+ });
+ $('total1').textContent=teamScore(0).toFixed(1);$('total2').textContent=teamScore(1).toFixed(1);$('team1Score').textContent=teamScore(0).toFixed(1);$('team2Score').textContent=teamScore(1).toFixed(1);$('gap').textContent=Math.abs(teamScore(0)-teamScore(1)).toFixed(1);
+ $('team1Count').textContent=state.teams[0].length+'/5';$('team2Count').textContent=state.teams[1].length+'/5';
+ const avail=eligible();$('availableCount').textContent=avail.length+' үлдсэн';
+ const turn=currentCaptain(),finished=state.teams[0].length===5&&state.teams[1].length===5;
+ $('turnText').textContent=finished?'Draft дууслаа — багууд бэлэн!':state.first===null?'Шоо хаях эсвэл гараар эхлэх багийг сонгоно уу.':turn===null?'Draft дууслаа.':`Одоо TEAM ${turn+1} (${state.players[state.caps[turn]].name}) сонголт хийнэ.`;
+ $('pool').innerHTML=avail.length?avail.map(p=>`<div class="poolcard"><strong>${esc(p.name)}</strong><small>Rating: ${Number(p.rating).toFixed(1)} / 10</small><button class="pickbtn" data-pick="${p.id}" ${turn===null?'disabled':''}>${turn===null?'WAITING':`+ TEAM ${turn+1} PICK`}</button></div>`).join(''):'<div class="empty" style="grid-column:1/-1">Бүх тоглогч багуудад хуваарилагдлаа.</div>';
+ $('undoBtn').disabled=!state.undoStack?.length;
+ $('historyCount').textContent=state.history.length+' үйлдэл';
+ $('history').innerHTML=state.history.length?state.history.map(h=>`<div class="historyitem"><span>${esc(h.label)}</span><b>${h.time}</b></div>`).join(''):'<div class="empty">Одоогоор түүх алга.</div>';
+ const opts=t=>state.teams[t].map(id=>`<option value="${id}">${esc(state.players[id].name)}</option>`).join('');
+ $('tradeA').innerHTML=opts(0)||'<option value="">—</option>';$('tradeB').innerHTML=opts(1)||'<option value="">—</option>';
+ $('tradeBtn').disabled=!state.teams[0].length||!state.teams[1].length;
+ $('soundBtn').textContent=state.sound?'🔊 Sound ON':'🔇 Sound OFF';
+ $('diceStatus').textContent=state.first===null?'Хүлээгдэж байна':`TEAM ${state.first+1} эхэлнэ`;
+ save();
+}
+function checkpoint(){state.undoStack??=[];state.undoStack.push(snapshot());if(state.undoStack.length>30)state.undoStack.shift()}
+function addCaptainTeams(){state.teams=[[],[]];state.teams[0].push(state.caps[0]);state.teams[1].push(state.caps[1]);}
+function startDraft(team){if(state.caps[0]===state.caps[1])return toast('Ахлагчид өөр өөр тоглогч байх ёстой.');checkpoint();state.first=team;state.turn=0;state.started=true;addCaptainTeams();pushHistory(`TEAM ${team+1} эхний сонголтын эрх авлаа`);$('outcome').textContent=`TEAM ${team+1} эхэлнэ. Эхний тоглогчоо сонгоно уу.`;beep(620);render()}
+function pick(id){let t=currentCaptain();if(t===null||state.teams[t].length>=5||teamOf(id)!==-1)return;checkpoint();state.teams[t].push(id);pushHistory(`TEAM ${t+1} сонголоо: ${state.players[id].name} (${state.players[id].rating})`);state.turn++;beep(540+state.players[id].rating*25);if(state.teams[0].length===5&&state.teams[1].length===5){$('outcome').textContent='Draft complete! Багууд бэлэн.';beep(880);toast('Draft дууслаа!')}render()}
+function rollDice(){if(state.first!==null)return toast('Эхлэх баг аль хэдийн сонгогдсон.');if(state.caps[0]===state.caps[1])return toast('Ахлагчдыг өөр өөрөөр сонгоно уу.');$('rollBtn').disabled=true;$('die1').classList.add('rolling');$('die2').classList.add('rolling');let count=0;let timer=setInterval(()=>{ $('die1').textContent=1+Math.floor(Math.random()*6);$('die2').textContent=1+Math.floor(Math.random()*6);beep(300+Math.random()*250,.04);if(++count>=9){clearInterval(timer);let a=1+Math.floor(Math.random()*6),b=1+Math.floor(Math.random()*6);$('die1').textContent=['⚀','⚁','⚂','⚃','⚄','⚅'][a-1];$('die2').textContent=['⚀','⚁','⚂','⚃','⚄','⚅'][b-1];$('val1').textContent=a;$('val2').textContent=b;$('die1').classList.remove('rolling');$('die2').classList.remove('rolling');$('rollBtn').disabled=false;if(a===b){$('outcome').textContent=`Тэнцлээ (${a}:${b}) — дахин шоо хаяна.`;beep(260)}else{let winner=a>b?0:1;$('outcome').textContent=`${a}:${b} — TEAM ${winner+1} түрүүлж сонгоно!`;startDraft(winner)}}},85)}
+function undo(){if(!state.undoStack?.length)return;let prev=JSON.parse(state.undoStack.pop());let stack=state.undoStack;Object.keys(state).forEach(k=>delete state[k]);Object.assign(state,prev);state.undoStack=stack;renderInputs();render();toast('Сүүлийн үйлдлийг буцаалаа');beep(330)}
+function trade(){let a=Number($('tradeA').value),b=Number($('tradeB').value);if(!state.teams[0].includes(a)||!state.teams[1].includes(b))return toast('Trade хийх хоёр тоглогч сонгоно уу.');if(state.caps.includes(a)||state.caps.includes(b))return toast('Ахлагчийг солих боломжгүй.');checkpoint();state.teams[0]=state.teams[0].map(x=>x===a?b:x);state.teams[1]=state.teams[1].map(x=>x===b?a:x);pushHistory(`TRADE: ${state.players[a].name} ⇄ ${state.players[b].name}`);render();toast('Trade амжилттай');beep(700)}
+function copyResult(){let lines=['CS2 CAPTAIN DRAFT','',`TEAM 1 — ${teamScore(0).toFixed(1)} rating`];state.teams[0].forEach(id=>lines.push(`• ${state.players[id].name} (${state.players[id].rating})`));lines.push('',`TEAM 2 — ${teamScore(1).toFixed(1)} rating`);state.teams[1].forEach(id=>lines.push(`• ${state.players[id].name} (${state.players[id].rating})`));let txt=lines.join('\n');if(navigator.clipboard?.writeText)navigator.clipboard.writeText(txt).then(()=>toast('Үр дүн хуулагдлаа!')).catch(()=>fallbackCopy(txt));else fallbackCopy(txt)}
+function fallbackCopy(txt){let ta=document.createElement('textarea');ta.value=txt;document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();toast('Үр дүн хуулагдлаа!')}
+function reset(){if(!confirm('Бүх тоглолтын мэдээллийг шинэчлэх үү?'))return;state.players=defaults.map(p=>({...p}));state.caps=[0,1];state.teams=[[],[]];state.first=null;state.turn=0;state.mode='snake';state.rolls=null;state.history=[];state.started=false;state.undoStack=[];$('outcome').textContent='Их тоо буулгасан ахлагч эхэлж сонгоно.';$('val1').textContent='—';$('val2').textContent='—';$('die1').textContent='⚄';$('die2').textContent='⚄';renderInputs();render();toast('Шинээр эхэллээ')}
+$('players').addEventListener('change',e=>{let n=e.target.dataset.name,r=e.target.dataset.rating;if(n!==undefined){state.players[+n].name=e.target.value.trim()||`Player ${+n+1}`;renderInputs();render()}if(r!==undefined){let v=Math.max(1,Math.min(10,Number(e.target.value)||1));state.players[+r].rating=v;e.target.value=v;render()}});
+$('cap1').addEventListener('change',e=>{state.caps[0]=+e.target.value;if(state.first!==null)resetDraftAfterSetup();renderInputs();render()});
+$('cap2').addEventListener('change',e=>{state.caps[1]=+e.target.value;if(state.first!==null)resetDraftAfterSetup();renderInputs();render()});
+function resetDraftAfterSetup(){state.teams=[[],[]];state.first=null;state.turn=0;state.undoStack=[];state.history=[];$('outcome').textContent='Ахлагч өөрчлөгдсөн тул draft-ийг дахин эхлүүлнэ.'}
+$('mode').addEventListener('change',e=>{state.mode=e.target.value;render()});
+$('randomBtn').onclick=()=>{state.players.forEach((p,i)=>{p.name=randomNames[i];p.rating=+(4+Math.random()*6).toFixed(1)});renderInputs();render();toast('Random players generated')};
+$('clearBtn').onclick=()=>{state.players.forEach((p,i)=>{p.name='';p.rating=5});renderInputs();render();toast('Нэрс цэвэрлэгдлээ')};
+$('rollBtn').onclick=rollDice;$('force1').onclick=()=>startDraft(0);$('force2').onclick=()=>startDraft(1);
+$('pool').addEventListener('click',e=>{let id=e.target.dataset.pick;if(id!==undefined)pick(+id)});
+$('undoBtn').onclick=undo;$('tradeBtn').onclick=trade;$('copyBtn').onclick=copyResult;$('resetBtn').onclick=reset;
+$('soundBtn').onclick=()=>{state.sound=!state.sound;render();if(state.sound)beep(600)};
+function init(){try{let saved=localStorage.getItem('cs2captaindraftpro');if(saved){let s=JSON.parse(saved);if(s.players?.length===10){Object.assign(state,s);state.undoStack=[]}}}catch(e){}renderInputs();render()}
+init();
+})();
+</script>
+
+<script>
+(()=>{
+ const $=id=>document.getElementById(id); let latest=null;
+ const status=(msg,type='')=>{const el=$('demoStatus');el.textContent=msg;el.className='statusline '+type};
+ const fmt=v=>v===null||v===undefined?'—':(typeof v==='number'?Number(v).toFixed(1):String(v));
+ $('demoFile').addEventListener('change',()=>{const f=$('demoFile').files[0];if(f)status(`Сонгосон файл: ${f.name} • ${(f.size/1048576).toFixed(1)} MB`)});
+ const drop=$('demoDrop');['dragenter','dragover'].forEach(e=>drop.addEventListener(e,x=>{x.preventDefault();drop.classList.add('drag')}));['dragleave','drop'].forEach(e=>drop.addEventListener(e,x=>{x.preventDefault();drop.classList.remove('drag')}));drop.addEventListener('drop',e=>{const f=e.dataTransfer.files[0];if(f){const dt=new DataTransfer();dt.items.add(f);$('demoFile').files=dt.files;status(`Сонгосон файл: ${f.name} • ${(f.size/1048576).toFixed(1)} MB`)}});
+ $('analyzeDemoBtn').onclick=async()=>{const f=$('demoFile').files[0];if(!f)return status('Эхлээд .dem файл сонгоно уу.','error');if(!f.name.toLowerCase().endsWith('.dem'))return status('Зөвхөн .dem өргөтгөлтэй файл оруулна.','error');const btn=$('analyzeDemoBtn');btn.disabled=true;btn.textContent='⏳ ANALYZING...';status('Demo-г уншиж байна. Файлын хэмжээнээс хамаарч хугацаа орно...');try{const fd=new FormData();fd.append('demo',f);const r=await fetch('/api/analyze',{method:'POST',body:fd});const data=await r.json();if(!r.ok)throw new Error(data.error||'Анализ амжилтгүй');latest=data;render(data);status(data.duplicate?'Энэ demo өмнө бүртгэгдсэн байна. Давхар тоолоогүй.':'Амжилттай анализ хийж хадгаллаа.','good');loadMatches();loadLeaderboard()}catch(e){status(e.message+' — START_SERVER.bat ажиллаж байгаа эсэхийг шалгана уу.','error')}finally{btn.disabled=false;btn.textContent='⚡ DEMO ANALYZE'}};
+ function render(d){$('demoResults').hidden=false;$('demoMeta').innerHTML=[`<span class="pill">${escapeHtml(d.filename)}</span>`,`<span class="pill">${escapeHtml(d.map||'Map тодорхойгүй')}</span>`,`<span class="pill">${d.rounds||0} rounds</span>`].join('');$('demoMetrics').innerHTML=[['Players',d.players.length],['Kills',d.total_kills],['Rounds',d.rounds],['Damage',d.total_damage]].map(x=>`<div class="metric"><small>${x[0]}</small><strong>${fmt(x[1])}</strong></div>`).join('');$('demoPlayerRows').innerHTML=d.players.map(p=>`<tr><td><b>${escapeHtml(p.name)}</b></td><td>${p.k}</td><td>${p.d}</td><td>${p.a}</td><td>${p.kd}</td><td>${p.hs_pct}%</td><td>${p.adr}</td></tr>`).join('')||'<tr><td colspan="7">Player stats олдсонгүй.</td></tr>'}
+ function escapeHtml(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+ $('exportCsvBtn').onclick=()=>{if(!latest)return;const rows=[['Player','Kills','Deaths','Assists','K/D','HS%','ADR'],...latest.players.map(p=>[p.name,p.k,p.d,p.a,p.kd,p.hs_pct,p.adr])];const csv='\ufeff'+rows.map(r=>r.map(x=>'"'+String(x).replace(/"/g,'""')+'"').join(',')).join('\n');const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));a.download='cs2-match-stats.csv';a.click();URL.revokeObjectURL(a.href)};
+ async function loadMatches(){try{const r=await fetch('/api/matches');if(!r.ok)return;const d=await r.json();$('savedMatches').innerHTML=d.matches.length?d.matches.map(m=>`<div class="matchcard"><b>${escapeHtml(m.filename)}</b><div>${escapeHtml(m.map||'Unknown map')} • ${m.rounds} rounds</div><div>${m.total_kills} kills • ${m.date}</div></div>`).join(''):'<div class="empty">Одоогоор хадгалсан demo алга.</div>'}catch(e){}}
+ async function loadLeaderboard(){try{const r=await fetch('/api/leaderboard');if(!r.ok)return;const d=await r.json();const ps=d.players||[];$('leaderMetrics').innerHTML=[['Matches',d.matches||0],['Players',ps.length],['Total kills',ps.reduce((a,p)=>a+p.k,0)],['Total assists',ps.reduce((a,p)=>a+p.a,0)]].map(x=>`<div class="metric"><small>${x[0]}</small><strong>${x[1]}</strong></div>`).join('');$('leaderRows').innerHTML=ps.length?ps.map((p,i)=>`<tr><td>${i+1}</td><td><b>${escapeHtml(p.name)}</b></td><td>${p.matches}</td><td>${p.k}</td><td>${p.d}</td><td>${p.a}</td><td>${p.kd}</td><td>${p.hs_pct}%</td><td>${p.adr}</td><td><b>${p.rating}</b></td></tr>`).join(''):'<tr><td colspan="10">Одоогоор статистик алга. Эхлээд demo анализ хийнэ үү.</td></tr>'}catch(e){}}
+ $('refreshMatchesBtn').onclick=loadMatches;$('refreshLeaderboardBtn').onclick=loadLeaderboard;loadMatches();loadLeaderboard();
+})();
+</script>
+
+</body>
+</html>
